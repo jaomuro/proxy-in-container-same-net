@@ -1,0 +1,31 @@
+networks:
+  rede-apps:
+    driver: bridge
+
+services:
+  proxy:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - rede-apps
+
+  green:
+    image: fabricioveronez/live-color
+    networks:
+      - rede-apps
+    volumes:
+      - ./green/index.html:/app/templates/index.html
+    ports:
+      - 8080:80
+
+  blue:
+    image: fabricioveronez/live-color
+    networks:
+      - rede-apps
+    volumes:
+      - ./blue/index.html:/app/templates/index.html
+    ports:
+      - 9090:80
